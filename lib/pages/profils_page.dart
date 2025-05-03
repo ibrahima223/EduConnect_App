@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'recompenses_page.dart';
+import 'parametres_page.dart';
+import 'modifier_profil_page.dart';
 
 class ProfilsPage extends StatelessWidget {
   const ProfilsPage({super.key});
@@ -120,12 +122,26 @@ class ProfilsPage extends StatelessWidget {
                   _buildMenuButton(
                     icon: Icons.edit,
                     label: 'Modifier le profil',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ModifierProfilPage(),
+                        ),
+                      );
+                    },
                   ),
                   _buildMenuButton(
                     icon: Icons.settings,
                     label: 'Paramètres',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ParametresPage(),
+                        ),
+                      );
+                    },
                   ),
                   _buildMenuButton(
                     icon: Icons.card_giftcard,
