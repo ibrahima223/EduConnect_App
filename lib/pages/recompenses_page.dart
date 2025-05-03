@@ -8,85 +8,113 @@ class RecompensesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Récompenses'),
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Section Badges
+            _buildPointsCard(),
+            const SizedBox(height: 24),
             _buildBadgesSection(),
-            const SizedBox(height: 30),
-            // Section Certificats
-            _buildCertificatesSection(),
+            const SizedBox(height: 24),
+            _buildAchievementsSection(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildPointsCard() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.deepPurple),
+      ),
+      child: Column(
+        children: [
+          const Icon(
+            Icons.star,
+            size: 50,
+            color: Colors.deepPurple,
+          ),
+          const SizedBox(height: 16),
+          const Text(
+            '150 Points',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Continuez à apprendre pour gagner plus de points !',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.deepPurple.withOpacity(0.7),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildBadgesSection() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text(
-            'Badges',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+        const Text(
+          'Badges',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
           ),
         ),
-        // Filtres
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildFilterChip('Tous'),
-              _buildFilterChip('Obtenu'),
-              _buildFilterChip('À débloquer'),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        // Grille de badges
+        const SizedBox(height: 16),
         GridView.count(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          crossAxisCount: 2,
-          padding: const EdgeInsets.all(16),
+          crossAxisCount: 3,
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           children: [
-            _buildBadgeCard(
-              badgeImage: 'lib/assets/images/Badge_Bronze.png',
-              title: 'Débutant engagé',
-              level: 'Bronze',
-              levelColor: Colors.brown,
-              criteria: 'Attribué après avoir terminé 5 cours',
+            _buildBadgeItem(
+              icon: Icons.school,
+              title: 'Débutant',
+              isUnlocked: true,
             ),
-            _buildBadgeCard(
-              badgeImage: 'lib/assets/images/Badge_Argent.png',
+            _buildBadgeItem(
+              icon: Icons.auto_awesome,
+              title: 'Étudiant',
+              isUnlocked: true,
+            ),
+            _buildBadgeItem(
+              icon: Icons.workspace_premium,
+              title: 'Expert',
+              isUnlocked: false,
+            ),
+            _buildBadgeItem(
+              icon: Icons.timer,
+              title: 'Assidu',
+              isUnlocked: true,
+            ),
+            _buildBadgeItem(
+              icon: Icons.quiz,
               title: 'Quiz Master',
-              level: 'Argent',
-              levelColor: Colors.grey,
-              criteria: 'Réussir 10 quiz consécutifs',
+              isUnlocked: false,
             ),
-            _buildBadgeCard(
-              badgeImage: 'lib/assets/images/Badge_Or.png',
-              title: 'Étudiant assidu',
-              level: 'Or',
-              levelColor: Colors.amber,
-              criteria: '20 heures d\'étude complétées',
-            ),
-            _buildBadgeCard(
-              badgeImage: 'lib/assets/images/Badge_Unknow.png',
-              title: 'Collaborateur',
-              level: 'Bronze',
-              levelColor: Colors.brown,
-              criteria: 'Participer à 3 discussions',
+            _buildBadgeItem(
+              icon: Icons.verified,
+              title: 'Certifié',
+              isUnlocked: false,
             ),
           ],
         ),
@@ -94,187 +122,123 @@ class RecompensesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip(String label) {
-    return FilterChip(
-      label: Text(label),
-      selected: label == 'Tous',
-      onSelected: (bool selected) {
-        // TODO: Implémenter la logique de filtrage
-      },
-    );
-  }
-
-  Widget _buildBadgeCard({
-    required String badgeImage,
+  Widget _buildBadgeItem({
+    required IconData icon,
     required String title,
-    required String level,
-    required Color levelColor,
-    required String criteria,
+    required bool isUnlocked,
   }) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: IntrinsicHeight(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Partie supérieure
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    badgeImage,
-                    width: 40,
-                    height: 40,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.emoji_events, size: 40, color: levelColor);
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: levelColor.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Text(
-                            level,
-                            style: TextStyle(
-                              color: levelColor,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              // Critères
-              Text(
-                criteria,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isUnlocked
+            ? Colors.deepPurple.withOpacity(0.1)
+            : Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: isUnlocked ? Colors.deepPurple : Colors.grey,
         ),
       ),
-    );
-  }
-
-  Widget _buildCertificatesSection() {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text(
-            'Certificats',
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 30,
+            color: isUnlocked ? Colors.deepPurple : Colors.grey,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            title,
+            textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              color: isUnlocked ? Colors.deepPurple : Colors.grey,
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAchievementsSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Réalisations',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
         ),
-        _buildCertificateCard(),
         const SizedBox(height: 16),
-        _buildCertificateCard(),
+        _buildAchievementItem(
+          title: 'Premier cours terminé',
+          description: 'Vous avez terminé votre premier cours',
+          isCompleted: true,
+        ),
+        _buildAchievementItem(
+          title: '5 quiz réussis',
+          description: 'Vous avez réussi 5 quiz consécutifs',
+          isCompleted: true,
+        ),
+        _buildAchievementItem(
+          title: '10 heures d\'apprentissage',
+          description: 'Vous avez passé 10 heures à apprendre',
+          isCompleted: false,
+        ),
       ],
     );
   }
 
-  Widget _buildCertificateCard() {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            // Partie 1: En-tête avec icône, date et bouton
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const Icon(Icons.school, color: Colors.blue),
-                    const SizedBox(width: 8),
-                    const Text('Certificat de Mathématiques'),
-                  ],
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    // TODO: Implémenter le téléchargement
-                  },
-                  icon: const Icon(Icons.download),
-                  label: const Text('Télécharger'),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            // Partie 2: Progression
-            Column(
+  Widget _buildAchievementItem({
+    required String title,
+    required String description,
+    required bool isCompleted,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isCompleted
+            ? Colors.deepPurple.withOpacity(0.1)
+            : Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: isCompleted ? Colors.deepPurple : Colors.grey,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            isCompleted ? Icons.check_circle : Icons.lock,
+            color: isCompleted ? Colors.deepPurple : Colors.grey,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const LinearProgressIndicator(
-                  value: 0.7,
-                  backgroundColor: Colors.grey,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Encore 3 quiz pour obtenir le certificat',
+                Text(
+                  title,
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                    color: isCompleted ? Colors.deepPurple : Colors.grey,
                   ),
                 ),
-                const SizedBox(height: 4),
                 Text(
-                  'Tu es à 70% du niveau Or',
+                  description,
                   style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.amber[700],
-                    fontWeight: FontWeight.bold,
+                    color: isCompleted
+                        ? Colors.deepPurple.withOpacity(0.7)
+                        : Colors.grey,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            // Partie 3: Bouton aperçu
-            ElevatedButton.icon(
-              onPressed: () {
-                // TODO: Implémenter l'aperçu
-              },
-              icon: const Icon(Icons.visibility),
-              label: const Text('Aperçu'),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

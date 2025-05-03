@@ -11,17 +11,20 @@ class ProfilsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profil'),
-        backgroundColor: Colors.blue,
+        centerTitle: true,
+        backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(height: 20),
             // Image de profil
-            const CircleAvatar(
+            CircleAvatar(
               radius: 50,
-              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+              backgroundImage: const NetworkImage('https://via.placeholder.com/150'),
+              backgroundColor: Colors.deepPurple.withOpacity(0.1),
             ),
             const SizedBox(height: 10),
             // Username
@@ -30,15 +33,16 @@ class ProfilsPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
               ),
             ),
             const SizedBox(height: 5),
             // Classe
-            const Text(
+            Text(
               'Terminal Science Exacte',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.grey,
+                color: Colors.deepPurple.withOpacity(0.7),
               ),
             ),
             const SizedBox(height: 20),
@@ -83,6 +87,7 @@ class ProfilsPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -116,6 +121,7 @@ class ProfilsPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -189,7 +195,7 @@ class ProfilsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
+            color: Colors.deepPurple.withOpacity(0.1),
             spreadRadius: 1,
             blurRadius: 5,
             offset: const Offset(0, 2),
@@ -198,21 +204,22 @@ class ProfilsPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.blue, size: 24),
+          Icon(icon, color: Colors.deepPurple, size: 24),
           const SizedBox(height: 4),
           Text(
             value,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
             ),
           ),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 10,
-              color: Colors.grey,
+              color: Colors.deepPurple.withOpacity(0.7),
             ),
           ),
         ],
@@ -227,20 +234,25 @@ class ProfilsPage extends StatelessWidget {
   }) {
     return Card(
       margin: const EdgeInsets.only(bottom: 10),
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: Colors.deepPurple.withOpacity(0.2)),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           children: [
-            Icon(icon, color: Colors.blue),
+            Icon(icon, color: Colors.deepPurple),
             const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: Colors.deepPurple.withOpacity(0.7),
                   ),
                 ),
                 Text(
@@ -248,6 +260,7 @@ class ProfilsPage extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
                   ),
                 ),
               ],
@@ -272,20 +285,20 @@ class ProfilsPage extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: isLogout ? Colors.red : Colors.blue,
+              color: isLogout ? Colors.red : Colors.deepPurple,
             ),
             const SizedBox(width: 12),
             Text(
               label,
               style: TextStyle(
                 fontSize: 16,
-                color: isLogout ? Colors.red : Colors.black,
+                color: isLogout ? Colors.red : Colors.deepPurple,
               ),
             ),
             const Spacer(),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Colors.grey,
+              color: Colors.deepPurple.withOpacity(0.5),
             ),
           ],
         ),
